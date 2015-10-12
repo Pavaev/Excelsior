@@ -18,8 +18,8 @@ public class ServletForm extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<!DOCTYPE html>" + "<html>" + "<head>"
                 + "<title>Registration</title>" + "<meta charset=\"utf-8\">"
-                + "<body>" + "<form method=\"POST\">" + "<p>" + "<input type=\"email\" name=\"email\"><br>"
-                + "<input type=\"password\" name=\"password\"></p>"
+                + "<body>" + "<form method=\"POST\">" + "<p>" + "<input type=\"email\" name=\"email\"> Mail<br>"
+                + "<input type=\"password\" name=\"password\">Password</p>"
                 + "<p><input type=\"submit\" ></p>" + "<p><input type=\"radio\" value=\"Women\" name=\"sex\"> Man</p>"
                 + "<p><input type=\"radio\" value=\"Women\" name=\"sex\"Women</p></body></html>Woman</p>"
                 + "<p><input type=\"checkbox\" name=\"checkbox\" style=\"height:10px; width:10px;\">Подписка</input></p>"
@@ -41,13 +41,8 @@ public class ServletForm extends HttpServlet {
         try (FileWriter writer = new FileWriter(DAT, true)) {
             writer.write(email + " ");
             writer.write(password + " ");
-            if (checkbox == null) {
-            writer.write("not_chosen ");}
-            if (checkbox == null) {
-                writer.write("off ");
-            } else {
-                writer.write(checkbox);
-            }
+            writer.write(radio==null? "not_chosen ": radio+" ");
+            writer.write(checkbox==null? "off": checkbox);
             writer.append("\n");
 
         } catch (IOException ex) {

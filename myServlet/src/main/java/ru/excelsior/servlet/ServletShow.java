@@ -28,7 +28,7 @@ public class ServletShow extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println("<!DOCTYPE html>" + "<html>" + "<head>"
                 + "<title>Table</title>" + "<meta charset=\"utf-8\">"
-                + "<body><table cellpadding=\"7\" border=\"2\">"
+                + "<body><table cellpadding=\"8\" border=\"5\">"
                 + "<tr><th>email</th><th>password</th><th>sex</th><th>subscription</th></tr>");
 
 
