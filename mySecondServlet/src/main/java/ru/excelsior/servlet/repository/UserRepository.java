@@ -21,10 +21,10 @@ public class UserRepository {
     public static final File DAT = new File("D:\\dat.txt");
 
     public static void addNewUser(User user) throws IncorrectEmailAdressException, IncorrectPasswordException, FileNotFoundException, EmailExistsException {
-        if (emailValidator(user.getEmail()) == false) {
+        if (!emailValidator(user.getEmail())) {
             throw new IncorrectEmailAdressException("Email Is Incorrect");
         }
-        if (passwordChecker(user.getPassword()) == false) {
+        if (!passwordChecker(user.getPassword())) {
             throw new IncorrectPasswordException("Password Is Incorrect");
         }
         if (userEmailExists(user)) {
