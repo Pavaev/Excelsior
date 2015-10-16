@@ -67,6 +67,6 @@ public class ServletForm extends HttpServlet {
                 + "<p><input type=\"radio\" value=\"Women\" name=\"sex\"Women</p></body></html>Woman</p>"
                 + "<p><input type=\"checkbox\" name=\"checkbox\" style=\"height:10px; width:10px;\">Subscription</input></p>"
                 + "</body></html>");
-        resp.sendRedirect("/Panaev");
+        resp.sendRedirect("/Panaev?status=1");
     }
 }
