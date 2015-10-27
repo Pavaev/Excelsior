@@ -9,12 +9,14 @@ public class User {
     private String password;
     private String sex;
     private String subscription;
+    private String aboutMyself;
 
-    public User(String email, String password, String sex, String subscription) {
+    public User(String email, String password, String sex, String subscription, String aboutMyself) {
         this.email = email;
         this.password = password;
         this.sex = sex;
         this.subscription = subscription;
+        this.aboutMyself = aboutMyself;
     }
 
 
@@ -48,5 +50,13 @@ public class User {
 
     public void setSubscription(String subscription) {
         this.subscription = subscription;
+    }
+
+    public String getaboutMyself() {
+        return aboutMyself;
+    }
+
+    public void setaboutMyself(String aboutMyself) {
+        this.aboutMyself = aboutMyself;
     }
 }

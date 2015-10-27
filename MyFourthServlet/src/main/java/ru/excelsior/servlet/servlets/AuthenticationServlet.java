@@ -22,7 +22,7 @@ public class AuthenticationServlet extends HttpServlet {
         if (session.getAttribute("auth") == null) {
             req.getServletContext().getRequestDispatcher("/WEB-INF/views/AuthenticationServlet.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect("/Panaev/myprofile");
+            resp.sendRedirect("/myprofile");
         }
     }
 
@@ -35,9 +35,9 @@ public class AuthenticationServlet extends HttpServlet {
 
             User user = UserIdentification.identificate(email, password);
             session.setAttribute("auth",user);
-            resp.sendRedirect("/Panaev/myprofile");
+            resp.sendRedirect("/myprofile");
             return;
-        } catch (IdentifyException ex) {
+        } catch ( IdentifyException ex) {
             req.setAttribute("message", ex.getMessage());
         }
         req.getServletContext().getRequestDispatcher("/WEB-INF/views/AuthenticationServlet.jsp").forward(req, resp);

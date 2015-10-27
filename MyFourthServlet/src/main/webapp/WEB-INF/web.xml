@@ -5,6 +5,10 @@
          version="3.1">
 
 
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+
     <servlet>
         <servlet-name>RegistrationServlet</servlet-name>
         <servlet-class>ru.excelsior.servlet.servlets.RegistrationServlet</servlet-class>
@@ -17,7 +21,10 @@
     <servlet-mapping>
         <servlet-name>RegistrationServlet</servlet-name>
         <url-pattern>/</url-pattern>
+
     </servlet-mapping>
+
+
 
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>

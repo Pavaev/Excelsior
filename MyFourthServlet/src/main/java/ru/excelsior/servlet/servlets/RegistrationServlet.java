@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -20,8 +19,9 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("utf-8");
         resp.setContentType("text/html");
+
         if (req.getParameter("auth") != null) {
-            resp.sendRedirect("/Panaev/myprolile");
+            resp.sendRedirect("/myprolile");
         }
         req.getServletContext().getRequestDispatcher("/WEB-INF/views/RegistrationServlet.jsp").forward(req, resp);
 
@@ -38,10 +38,11 @@ public class RegistrationServlet extends HttpServlet {
         String password = req.getParameter("password");
         String sex = req.getParameter("radio");
         String checkbox = req.getParameter("checkbox");
+        String aboutMyself = req.getParameter("aboutMyself");
 
         try {
-            UserRepository.addNewUser(new User(email, password, sex, checkbox == null ? "off" : "on"));
-            resp.sendRedirect("/Panaev/auth");
+            UserRepository.addNewUser(new User(email, password, sex, checkbox, aboutMyself));
+            resp.sendRedirect("/auth");
 
 
         } catch (EmailExistsException | IncorrectPasswordException| IncorrectEmailAddressException ex) {

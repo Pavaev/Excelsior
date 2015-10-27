@@ -14,9 +14,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Daniel Shchepetov on 14.10.2015.
- */
+
 public class UserRepository {
     public static final File DAT = new File("D:\\dat.txt");
 
@@ -34,7 +32,8 @@ public class UserRepository {
             writer.write(user.getEmail() + " ");
             writer.write(user.getPassword() + " ");
             writer.write(user.getSex() == null ? "not_chosen " : user.getSex() + " ");
-            writer.write(user.getSubscription() == null ? "off" : user.getSubscription());
+            writer.write(user.getSubscription() == null ? "off " : user.getSubscription() + " ");
+            writer.write(user.getaboutMyself() == null ? "Anonimous " : user.getaboutMyself());
             writer.append("\n");
 
         } catch (IOException ex) {
@@ -65,7 +64,7 @@ public class UserRepository {
 
         while (scan.hasNext()) {
 
-            User user = new User(scan.next(), scan.next(), scan.next(), scan.next());  //email, password, sex, subscription
+            User user = new User(scan.next(), scan.next(), scan.next(), scan.next(), scan.next());  //email, password, sex, subscription, aboutMyself
             list.add(user);
 
         }
@@ -77,8 +76,8 @@ public class UserRepository {
     private static boolean userEmailExists(User currentUser) throws FileNotFoundException {
 
         ArrayList<User> list = userList();
-        for (User user: list){
-            if(user.getEmail().equals(currentUser.getEmail())){
+        for (User user : list) {
+            if (user.getEmail().equals(currentUser.getEmail())) {
                 return true;
             }
         }

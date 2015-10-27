@@ -15,6 +15,7 @@
         <th>Password</th>
         <th>Sex</th>
         <th>Subscription</th>
+        <th>Information</th>
     </tr>
 
 
@@ -23,7 +24,11 @@
         <td><c:out value="${user.getPassword()}"></c:out></td>
         <td><c:out value="${user.getSex()}"></c:out></td>
         <td><c:out value="${user.getSubscription()}"></c:out></td>
+        <td><c:out value="${user.getaboutMyself()}"></c:out></td>
     </tr>
+    <form method="POST">
+    <input id="button" type="submit" value="logout" name="logout">
+        </form>
     <br>
     <br>
     <c:if test="${not empty message}">
