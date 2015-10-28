@@ -10,7 +10,13 @@
 
 
 <body>
-<script type = "text/javascript" src = "js/countChar.js" > </script>
+<script type = "text/javascript">
+    function countChar() {
+        var count = document.getElementById("count");
+        var textarea = document.getElementById("textarea");
+        count.value = textarea.value.length;
+    }
+</script>
 <form method="POST"><p><input type="text" name="email"> Mail<br>
     <input type="text" name="password">Password</p>
 
