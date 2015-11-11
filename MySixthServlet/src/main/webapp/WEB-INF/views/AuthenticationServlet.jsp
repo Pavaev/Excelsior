@@ -14,7 +14,7 @@
 
     <p>Password
         <input class="field" type="text" name="password"></p> <br>
-    <input id="button" type="submit" value="Enter" name="enter">
+    <input id="button" type="submit" value="Enter" name="Enter">
 </form>
 
 <br>

@@ -9,7 +9,7 @@ import ru.excelsior.servlet.utilities.UserService;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.ArrayList;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +24,7 @@ public class UserRepository {
             throw new IncorrectEmailAddressException("Email Is Incorrect");
         }
         if (!passwordChecker(user.getPassword())) {
-            throw new IncorrectPasswordException("Password Is Incorrect(4-20 symbols).");
+            throw new IncorrectPasswordException("Password Is Incorrect(need 4-20 symbols).");
         }
 
         try {
@@ -62,6 +62,18 @@ public class UserRepository {
         Connection connection = DBService.connect();
         PreparedStatement statement = connection.prepareStatement(select);
         statement.setString(1, email);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            return new User(result.getInt("id"), result.getString("email"), result.getString("password"), result.getString("sex"), result.getString("subscription"), result.getString("aboutMyself"));
+        }
+        return null;
+    }
+    public static User getUserId(int id) throws SQLException {
+        String select = "SELECT * FROM users WHERE id = ?;";
+        Connection connection = DBService.connect();
+        PreparedStatement statement = connection.prepareStatement(select);
+        statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {

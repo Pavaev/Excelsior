@@ -14,7 +14,7 @@
 <form method="POST"><p><input type="text" name="email"> Mail<br>
     <input type="text" name="password">Password</p>
 
-    <p><input type="submit"></p>
+    <p><input type="submit">Register now</p>
 
     <p><input type="radio" value="Man" name="radio"> Man</p>
 

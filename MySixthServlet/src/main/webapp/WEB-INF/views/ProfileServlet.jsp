@@ -20,14 +20,14 @@
 
 
     <tr>
-        <td><c:out value="${user.getEmail()}"></c:out></td>
-        <td><c:out value="${user.getPassword()}"></c:out></td>
-        <td><c:out value="${user.getSex()}"></c:out></td>
-        <td><c:out value="${user.getSubscription()}"></c:out></td>
-        <td><c:out value="${user.getaboutMyself()}"></c:out></td>
+        <td>${user.getEmail()}</td>
+        <td>${user.getPassword()}</td>
+        <td>${user.getSex()}</td>
+        <td>${user.getSubscription()}</td>
+        <td>${user.getaboutMyself()}</td>
     </tr>
     <form method="POST">
-    <input id="button" type="submit" value="logout" name="logout">
+    <input id="button" type="submit" value="Logout" name="Logout">
         </form>
     <br>
     <br>

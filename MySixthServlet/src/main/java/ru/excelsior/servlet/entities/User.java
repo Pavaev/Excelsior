@@ -4,15 +4,24 @@ package ru.excelsior.servlet.entities;
  * Created by Daniel Shchepetov on 13.10.2015.
  */
 public class User {
-    private int idusers;
+    private int id;
     private String email;
     private String password;
     private String sex;
     private String subscription;
     private String aboutMyself;
 
-    public User( String email, String password, String sex, String subscription, String aboutMyself) {
+    public User(String email, String password, String sex, String subscription, String aboutMyself) {
 
+        this.email = email;
+        this.password = password;
+        this.sex = sex;
+        this.subscription = subscription;
+        this.aboutMyself = aboutMyself;
+    }
+
+    public User(int id, String email, String password, String sex, String subscription, String aboutMyself) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.sex = sex;
@@ -61,11 +70,11 @@ public class User {
         this.aboutMyself = aboutMyself;
     }
 
-    public int getIdusers() {
-        return idusers;
+    public int getId() {
+        return id;
     }
 
-    public void setIdusers(int idusers) {
-        this.idusers = idusers;
+    public void setId(int id) {
+        this.id = id;
     }
 }

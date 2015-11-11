@@ -26,6 +26,10 @@
         <servlet-name>ProfileServlet</servlet-name>
         <servlet-class>ru.excelsior.servlet.servlets.ProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostServlet</servlet-name>
+        <servlet-class>ru.excelsior.servlet.servlets.PostServlet</servlet-class>
+    </servlet>
 
 
 
@@ -48,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>AuthenticationServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostServlet</servlet-name>
+        <url-pattern>/myprofile/post</url-pattern>
     </servlet-mapping>
 
 </web-app>

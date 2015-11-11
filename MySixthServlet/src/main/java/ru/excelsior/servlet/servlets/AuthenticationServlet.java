@@ -40,6 +40,7 @@ public class AuthenticationServlet extends HttpServlet {
             return;
         } catch ( IdentifyException ex) {
             req.setAttribute("message", ex.getMessage());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
