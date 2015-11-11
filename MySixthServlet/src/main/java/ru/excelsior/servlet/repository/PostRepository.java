@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PostRepository {
 
     public static void addNewPost(Post post) {
-        String insert = "INSERT INTO posts (user_id, username, post) VALUES (?,?,?)";
+        String insert = "INSERT INTO posts (user_id, username, post, date) VALUES (?,?,?,?)";
         Connection connection = DBService.connect();
 
         try {
@@ -23,6 +23,7 @@ public class PostRepository {
             statement.setInt(1, post.getUser_id());
             statement.setString(2, post.getUsername());
             statement.setString(3, post.getPost());
+            statement.setString(4, post.getDate());
             statement.execute();
         } catch (SQLException e) {
             System.err.println("Проблемы с базой данных");
@@ -39,12 +40,14 @@ public class PostRepository {
                 int id = result.getInt(1);
                 int user_id = result.getInt(2);
                 String post = result.getString(3);
-                User user = UserRepository.getUserId(user_id);
-                if (user!=null){
-                String username = user.getEmail();
-                list.add(new Post(id, user_id, username, post));}
-                else {return null;}
+                String username = result.getString(4);
+                String date = result.getString(5);
+
+
+                list.add(new Post(id, user_id, username, post, date));
             }
+
+
         } catch (SQLException e) {
             System.err.println("Проблемы с базой данных");
         }

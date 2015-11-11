@@ -41,15 +41,16 @@ public class PostServlet extends HttpServlet {
         resp.setContentType("text/html");
         HttpSession session = req.getSession();
 
-        String post = req.getParameter("post");
+        String posts = req.getParameter("post");
 
         User user = (User) session.getAttribute("auth");
 
         String username = user.getEmail();
 
-           int user_id = user.getId();
-
-        PostRepository.addNewPost(new Post(user_id, username, post));
+        int user_id = user.getId();
+        Post post = new Post(user_id, username, posts);
+        post.setDate(post.today());
+        PostRepository.addNewPost(post);
 
     }
 }

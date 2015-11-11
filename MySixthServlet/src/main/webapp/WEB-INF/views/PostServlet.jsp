@@ -14,14 +14,15 @@
     <p><textarea id="textarea" value="post" name="post" maxlength=500
                  style="width: 200px; height: 100px;"></textarea></p>
 
-    <p><input type="submit" name = "Register now" value = "Register now"></p>
+    <p><input type="submit" name="Submit" value="Submit"></p>
     <br>
     <br>
-<c:if test="${not empty list}">
+    <c:if test="${not empty list}">
 
     <c:forEach items="${list}" var="post">
     <p><b>${post.getUsername()}:</b> <br>
-            ${post.getPost()}
+            ${post.getPost()}<br>
+        <i>${post.getDate()}</i>
     </p>
     </c:forEach>
     </c:if>
