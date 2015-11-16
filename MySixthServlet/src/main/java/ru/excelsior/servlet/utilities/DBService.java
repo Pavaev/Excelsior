@@ -10,7 +10,7 @@ public final class DBService {
 
     private static final String URI = "jdbc:mysql://localhost:3306/guest_book";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "vfdhbr-cj,frf";
+    private static final String PASSWORD = "";
 
     public static Connection connect() {
         try {
