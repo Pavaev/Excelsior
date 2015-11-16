@@ -4,7 +4,6 @@ package ru.excelsior.servlet.servlets;
 import ru.excelsior.servlet.entities.Post;
 import ru.excelsior.servlet.repository.PostRepository;
 import ru.excelsior.servlet.entities.User;
-import ru.excelsior.servlet.repository.UserRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -43,6 +41,7 @@ public class PostServlet extends HttpServlet {
 
         String posts = req.getParameter("post");
 
+
         User user = (User) session.getAttribute("auth");
 
         String username = user.getEmail();
@@ -51,6 +50,6 @@ public class PostServlet extends HttpServlet {
         Post post = new Post(user_id, username, posts);
         post.setDate(post.today());
         PostRepository.addNewPost(post);
-
+        resp.sendRedirect("/myprofile/post");
     }
 }

@@ -38,7 +38,7 @@ public class AuthenticationServlet extends HttpServlet {
             session.setAttribute("auth",user);
             resp.sendRedirect("/myprofile");
             return;
-        } catch ( IdentifyException ex) {
+        } catch (IdentifyException ex) {
             req.setAttribute("message", ex.getMessage());
 
         } catch (SQLException e) {

@@ -25,7 +25,7 @@
     About Myself
 
 
-    <p><textarea id="textarea" value="aboutMyself" name="aboutMyself" maxlength=128
+    <p><textarea id="textarea" value="aboutMyself" name="aboutMyself"
                  style="width: 300px; height: 150px;"
                  onchange="countChar()" onkeyup="countChar()">
 
@@ -41,7 +41,12 @@
     <h3>${message}</h3>
 </c:if>
 
-<script type="text/javascript" src="/js/countChar.js"></script>
+<script type="text/javascript">function countChar() {
+    var count = document.getElementById("count");
+    var textarea = document.getElementById("textarea");
+    count.value = textarea.value.length;}</script>
+
+<!-- <script type="text/javascript" src="<c:url value="/js/countChar.js"/>"></script> -->
 </body>
 
 
