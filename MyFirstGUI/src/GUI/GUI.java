@@ -1,6 +1,7 @@
 package GUI;
 
 import Entities.Product;
+import Repository.ProductRepository;
 import Utilities.DBService;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class GUI extends JFrame {
         categoryContent.setLayout(new GridBagLayout());
 
         JPanel listOfProducts = new JPanel();
-        listOfProducts.setLayout(new GridBagLayout());
+        listOfProducts.setLayout(new BorderLayout());
 
         tabbedPane.addTab("Products", productContent);
         tabbedPane.addTab("Categories", categoryContent);
@@ -93,19 +94,14 @@ public class GUI extends JFrame {
         addCategoryButton.addActionListener(addCategoryListener);
         categoryContent.add(addCategoryButton);
 
+        String[][] rows = ProductRepository.getAll();
+        String[] columnNames = {"Name", "Price", "Weight", "Manufacturer"};
 
-        String columnName[] = {"Name", "Price", "Weight", "Manufacturer"};
-
-        String [][] rows = {{ "name212121", "1", "1", "man1"},
-        {"name1", "2", "1", "man2"}};
-
-
-
-
-
-
-        JTable table = new JTable(rows, columnName);
-        listOfProducts.add(table);
+        JTable table = new JTable(rows, columnNames);
+        table.setEnabled(false);
+        table.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(table);
+        listOfProducts.add(scrollPane);
 
         this.add(tabbedPane);
         this.setBounds(150, 150, 500, 300);
@@ -132,6 +128,7 @@ public class GUI extends JFrame {
         c.gridwidth = GridBagConstraints.REMAINDER;
         return c;
     }
+
     private GridBagConstraints setTopLabelConstraints() {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
@@ -140,27 +137,6 @@ public class GUI extends JFrame {
         c.gridwidth = GridBagConstraints.REMAINDER;
         return c;
     }
-    public static ArrayList<Product> prodList() {
-        ArrayList<Product> list = new ArrayList<>();
-        Connection connection = DBService.connect();
-        try {
-            ResultSet result = connection.createStatement().executeQuery("SELECT name, price, weight, manufacturer FROM posts");
-            while (result.next()) {
 
-               String name = result.getString(1);
-                int price= result.getInt(2);
-                int weight = result.getInt(3);
-                String manufacturer = result.getString(4);
-
-
-                list.add(new Product(name, price, weight, manufacturer));
-            }
-
-
-        } catch (SQLException e) {
-            System.err.println("Проблемы с базой данных");
-        }
-        return list;
-    }
 
 }

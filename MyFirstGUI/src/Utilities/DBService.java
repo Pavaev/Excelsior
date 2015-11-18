@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 public final class DBService {
     private static Connection connection;
-
     private static final String URI = "jdbc:mysql://localhost:3306/goods";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "vfdhbr-cj,frf";

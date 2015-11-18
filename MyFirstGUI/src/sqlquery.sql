@@ -1,1 +1,1 @@
-insert into products (name, price, weight, manufacturer, category) VALUES ("Product1", 100, 100, "Maker", 3);
+insert into products (pname, price, weight, manufacturer, category) VALUES ("Product1", 100, 100, "Maker", 3);
