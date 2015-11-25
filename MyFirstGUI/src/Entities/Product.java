@@ -11,9 +11,10 @@ public class Product {
     private String manufacturer;
     private String category;
 
-public Product(String name, int price, int weight,String manufacturer){
+public Product(String name, int price, String category, int weight, String manufacturer){
     this.name = name;
     this.price = price;
+    this.category = category;
     this.weight = weight;
     this.manufacturer = manufacturer;
 }

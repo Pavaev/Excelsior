@@ -1,59 +1,133 @@
 package Repository;
 
 import Entities.Product;
-import Utilities.DBService;
+import Exceptions.ProductException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.*;
 import java.util.ArrayList;
+
 
 public class ProductRepository {
 
-    public static void addProduct(Product product) {
+    private static final String MYURL = "http://localhost:3000/product";
+
+    public static void addProduct(Product product) throws ProductException, IOException {
+
+        try {
+            validateProduct(product);
+
+
+            URL obj = new URL(MYURL);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("POST");
+
+            String urlParameters = "name=" + product.getName() + "&price=" + product.getPrice() + "&category=" + product.getCategory() + "&weight=" + product.getWeight() + "&manufacturer=" + product.getManufacturer();
+
+            con.setDoOutput(true);
+
+            DataOutputStream dataOutputStream = new DataOutputStream(con.getOutputStream());
+            dataOutputStream.writeBytes(urlParameters);
+            dataOutputStream.flush();
+            dataOutputStream.close();
+
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + MYURL);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
+        } catch (ProductException e) {
+            e.printStackTrace();
+            throw e;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static ArrayList<Product> getAllProducts() {
-        ArrayList<Product> list = new ArrayList<>();
-        Connection connection = DBService.connect();
+    private static String getAllProducts() {
+        HttpURLConnection con;
+        String string = null;
+        StringBuffer json = new StringBuffer();
         try {
-            ResultSet result = connection.createStatement().executeQuery("SELECT pname, price, weight, manufacturer FROM products");
-            while (result.next()) {
-                String name = result.getString(1);
-                int price = result.getInt(2);
-                int weight = result.getInt(3);
-                String manufacturer = result.getString(4);
+            con = (HttpURLConnection) ((new URL(MYURL).openConnection()));
+            con.setRequestMethod("GET");
+            con.setDoInput(true);
 
 
-                list.add(new Product(name, price, weight, manufacturer));
+            BufferedReader input = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+
+
+            while ((string = input.readLine()) != null) {
+                json.append(string);
             }
+            input.close();
 
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
 
-        } catch (SQLException e) {
-            System.err.println("Проблемы с базой данных");
+    private static ArrayList getAllProductsList() {
+        String string = getAllProducts();
+        JSONParser parser = new JSONParser();
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            Object obj = parser.parse(string);
+            JSONArray jsonArr = (JSONArray) obj;
+            for (int i = 0; i < jsonArr.size(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArr.get(i);
+                String name = String.valueOf(jsonObject.get("name"));
+                String price = String.valueOf(jsonObject.get("price"));
+                String category = String.valueOf(jsonObject.get("category"));
+                String weight = String.valueOf(jsonObject.get("weight"));
+                String manufacturer = String.valueOf(jsonObject.get("manufacturer"));
+                Product product = new Product(name, Integer.parseInt(price), category, Integer.parseInt(weight), manufacturer);
+                list.add(product);
+
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return list;
     }
 
-    public static Product getProduct() {
+    public static String[][] makeTable() {
+        ArrayList<Product> list = getAllProductsList();
+        String[][] products = new String[list.size()][5];
+        for (int i = 0; i < list.size(); i++) {
+            products[i][0] = list.get(i).getName();
+            products[i][1] = String.valueOf(list.get(i).getPrice());
+            products[i][2] = list.get(i).getCategory();
+            products[i][3] = String.valueOf(list.get(i).getWeight());
+            products[i][4] = list.get(i).getManufacturer();
 
-        return null;
+        }
+        return products;
     }
 
 
+    public static void validateProduct(Product product) throws ProductException {
 
-        public static void moveProduct() {
+        if (product.getName() == "" || product.getCategory() == "") {
+            throw new ProductException("All fields must be filled");
+        }
+        if (product.getWeight() <= 0 || product.getPrice() < 0) {
+            throw new ProductException("Price and weight can't be less than zero");
+        }
     }
-public static String[][] getAll(){
-    ArrayList<Product> list = getAllProducts();
-    String [][] products = new String[list.size()][4];
-    for (int i = 0; i<list.size(); i++){
-        products[i][0] = list.get(i).getName();
-        products[i][1] = String.valueOf(list.get(i).getPrice());
-        products[i][2] = String.valueOf(list.get(i).getWeight());
-        products[i][3] = list.get(i).getManufacturer();
-
-    }
-    return products;
-}
 }
