@@ -18,7 +18,7 @@ public class ProductAdd {
     public static JPanel getPanel() {
 
 
-        Font font = new Font("Verdana", Font.PLAIN, 16);
+        final Font font = new Font("Verdana", Font.PLAIN, 16);
         final JPanel productContent = new JPanel();
         productContent.setLayout(new GridBagLayout());
 
@@ -88,6 +88,21 @@ public class ProductAdd {
         };
         addProductButton.addActionListener(addListener);
         productContent.add(addProductButton);
+
+        final JButton listButton = new JButton("List of Products");
+        ActionListener listListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame listOfProducts = new JFrame();
+                listOfProducts = ListOfProducts.getProductPanel();
+                listOfProducts.setVisible(true);
+
+
+            }
+        };
+
+        listButton.addActionListener(listListener);
+        productContent.add(listButton);
 
 
         return productContent;
