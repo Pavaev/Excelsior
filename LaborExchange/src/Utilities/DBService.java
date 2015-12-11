@@ -12,7 +12,7 @@ import java.sql.*;
 public class DBService {
 
     private static Connection connection;
-    private static final String URI = "jdbc:sqlserver://localhost:1433;databaseName=university;integratedSecurity=true;";
+    private static final String URI = "jdbc:sqlserver://localhost:1433;databaseName=LaborExchange;integratedSecurity=true;";
 
     public static Connection connect() {
 

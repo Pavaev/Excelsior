@@ -9,13 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Created by Daniel Shchepetov on 11.12.2015.
  */
 public class DistDialog {
-    public static JDialog getD(final Unemployed unemp) {
+    public DistDialog(final Unemployed unemp) {
         final JDialog dial = new JDialog();
         dial.setBounds(200, 200, 400, 200);
         dial.setLayout(new GridBagLayout());
@@ -28,10 +27,7 @@ public class DistDialog {
         ActionListener a = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Unemployed> list = UnemployedRepository.getByParam("ФИО", unemp.getName());
-                JFrame frame = FindUnempForm.getFrame(list);
-                frame.setVisible(true);
-
+                new DistUnempFrame(unemp);
             }
         };
 
@@ -62,6 +58,6 @@ public class DistDialog {
         dial.add(but, GUIService.setLabelConstraints());
         dial.add(b, GUIService.setLabelConstraints());
 
-        return dial;
+        dial.setVisible(true);
     }
 }

@@ -1,8 +1,8 @@
 package GUI;
 
 
-import GUI.Company.CompaniesForm;
-import GUI.Unemployed.UnemployedForm;
+import GUI.Company.CompaniesPanel;
+import GUI.Unemployed.UnemplPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,8 +21,8 @@ public class GUI extends JFrame {
 
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(font);
-        tabbedPane.add("Безработные", UnemployedForm.getPanel());
-        tabbedPane.add("Фирмы", CompaniesForm.getPanel());
+        tabbedPane.add("Безработные", UnemplPanel.getPanel());
+        tabbedPane.add("Фирмы", CompaniesPanel.getPanel());
         panel.add(tabbedPane);
         this.add(panel);
 

@@ -6,11 +6,17 @@ package Entities;
 public class Find {
     private int id;
     private int u_id;
+    private String name;
     private String pos;
     private int archive;
 
     public Find(int u_id, String pos) {
         this.u_id = u_id;
+        this.pos = pos;
+    }
+    public Find(int id, String name, String pos) {
+        this.id = id;
+        this.name = name;
         this.pos = pos;
     }
 
@@ -44,5 +50,13 @@ public class Find {
 
     public void setArchive(int archive) {
         this.archive = archive;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String u_name) {
+        this.name = name;
     }
 }

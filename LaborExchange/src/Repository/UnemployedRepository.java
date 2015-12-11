@@ -48,7 +48,6 @@ public class UnemployedRepository {
         String insert = "{CALL getAll}";
         try {
             CallableStatement st = con.prepareCall(insert);
-
             ResultSet set = st.executeQuery();
             while (set.next()) {
                 list.add(new Unemployed(
@@ -69,7 +68,7 @@ public class UnemployedRepository {
         return list;
     }
 
-    public static String[][] getTable(ArrayList<Unemployed> list) {
+    public static String[][] getUnempTable(ArrayList<Unemployed> list) {
 
 
         String[][] data = new String[list.size()][8];
@@ -154,6 +153,36 @@ public class UnemployedRepository {
         return list;
     }
 
+    public static ArrayList<Unemployed> getConflicts(String name, int age, String prof) {
+
+        ArrayList<Unemployed> list = new ArrayList<Unemployed>();
+        Connection con = DBService.connect();
+        String insert = "{CALL getConflicts(?,?,?)}";
+        try {
+            CallableStatement st = con.prepareCall(insert);
+            st.setString(1, name);
+            st.setInt(2, age);
+            st.setString(3, prof);
+            ResultSet set = st.executeQuery();
+            while (set.next()) {
+                list.add(new Unemployed(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getInt(3),
+                        set.getString(4),
+                        set.getString(5),
+                        set.getString(6),
+                        set.getString(7),
+                        set.getString(8)));
+
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void deleteById(int id) {
         String insert = "DELETE FROM Unemployed WHERE id = ?";
 
@@ -193,7 +222,7 @@ public class UnemployedRepository {
 
     }
 
-    public static void ageValidator(String age) throws UnemployedException {
+    public static void intValidator(String age) throws UnemployedException {
         final String PATTERN = "^[0-9][0-9]*$";
         Pattern pattern = Pattern.compile(PATTERN);
         Matcher matcher = pattern.matcher(age);
@@ -221,4 +250,6 @@ public class UnemployedRepository {
         }
         return false;
     }
+
+
 }
