@@ -69,12 +69,12 @@ public class UnemployedRepository {
         return list;
     }
 
-    public static String[][] getTable() {
+    public static String[][] getTable(ArrayList<Unemployed> list) {
 
-        ArrayList<Unemployed> res = getAll();
-        String[][] data = new String[res.size()][8];
+
+        String[][] data = new String[list.size()][8];
         int i = 0;
-        for (Unemployed unemp : res) {
+        for (Unemployed unemp : list) {
             data[i][0] = String.valueOf(unemp.getId());
             data[i][1] = unemp.getName();
             data[i][2] = String.valueOf(unemp.getAge());
@@ -97,7 +97,7 @@ public class UnemployedRepository {
             CallableStatement st = con.prepareCall(insert);
             st.setString(1, String.valueOf(id));
             ResultSet set = st.executeQuery();
-            if (set != null) {
+
                 while (set.next()) {
                     unemp = new Unemployed(id,
                             set.getString(2),
@@ -115,13 +115,43 @@ public class UnemployedRepository {
                             set.getString(14)
                     );
                 }
-            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return unemp;
+    }
+
+
+    public static ArrayList<Unemployed> getByParam(String param, String value) {
+
+        ArrayList<Unemployed> list = new ArrayList<Unemployed>();
+        Connection con = DBService.connect();
+        String insert = "{CALL getUnempByParam(?,?)}";
+        try {
+            CallableStatement st = con.prepareCall(insert);
+            st.setString(1, param);
+            st.setString(2, value);
+            ResultSet set = st.executeQuery();
+            while (set.next()) {
+                list.add(new Unemployed(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getInt(3),
+                        set.getString(4),
+                        set.getString(5),
+                        set.getString(6),
+                        set.getString(7),
+                        set.getString(8)));
+
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public static void deleteById(int id) {
@@ -132,9 +162,10 @@ public class UnemployedRepository {
             p.setInt(1, id);
             p.execute();
 
-    } catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        }}
+        }
+    }
 
 
     private static void check(Unemployed unemp) throws UnemployedException {
@@ -145,8 +176,8 @@ public class UnemployedRepository {
         if (unemp.getName() == null || "".equals(unemp.getName())) {
             throw new UnemployedException("Поле ФИО не заполнено");
         }
-        if (unemp.getAge() < 14 || unemp.getAge() > 70) {
-            throw new UnemployedException("Поле Возраст не заполнено или заполнено некорректно");
+        if (unemp.getAge() < 1910) {
+            throw new UnemployedException("Поле Год рождения не заполнено или заполнено некорректно(Не раньше 1910 года рождения)");
         }
         if (unemp.getAddress() == null || "".equals(unemp.getAddress())) {
             throw new UnemployedException("Поле Адрес не заполнено");
@@ -172,4 +203,22 @@ public class UnemployedRepository {
 
     }
 
+    public static boolean unempDist(String name, int age, String prof) {
+        String insert = "SELECT * FROM Unemployed WHERE fio = ? AND age = ? AND prof = ?";
+
+        try {
+            PreparedStatement p = DBService.connect().prepareStatement(insert);
+            p.setString(1, name);
+            p.setInt(2, age);
+            p.setString(3, prof);
+            p.execute();
+            ResultSet set = p.executeQuery();
+            if (!set.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

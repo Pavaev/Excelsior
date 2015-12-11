@@ -1,6 +1,9 @@
 package GUI;
 
 
+import GUI.Company.CompaniesForm;
+import GUI.Unemployed.UnemployedForm;
+
 import javax.swing.*;
 import java.awt.*;
 
