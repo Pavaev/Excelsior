@@ -18,6 +18,7 @@ public class Unemployed {
     private String lastPos;
     private String dismiss;
     private int archive;
+    private String archiveN;
 
 
     public Unemployed(String name, int age,String sex, String sp, String home, String address, String phone, String stud, String prof, String lastWork, String lastPos, String dismiss) {
@@ -59,6 +60,18 @@ public class Unemployed {
         this.phone = phone;
         this.stud = stud;
         this.prof = prof;
+
+    }
+    public Unemployed(int id,String name, int age,String sex, String address, String phone, String stud, String prof, String archiveN) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.address = address;
+        this.phone = phone;
+        this.stud = stud;
+        this.prof = prof;
+        this.archiveN = archiveN;
 
     }
 
@@ -172,5 +185,13 @@ public class Unemployed {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getArchiveN() {
+        return archiveN;
+    }
+
+    public void setArchiveN(String archiveN) {
+        this.archiveN = archiveN;
     }
 }

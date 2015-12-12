@@ -104,9 +104,18 @@ public class UnemplProfFrame {
         };
         b.addActionListener(l);
 
+        JButton bu = new JButton("Создать объявление");
+        ActionListener li = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        };
+
         panel.add(but, GUIService.setTextFieldConstraints());
         panel.add(b, GUIService.setTextFieldConstraints());
         panel.add(button, GUIService.setTextFieldConstraints());
+        panel.add(bu, GUIService.setTextFieldConstraints());
 
 
         frame.add(panel);

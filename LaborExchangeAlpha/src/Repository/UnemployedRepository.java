@@ -68,6 +68,7 @@ public class UnemployedRepository {
         return list;
     }
 
+
     public static String[][] getTable(ArrayList<Unemployed> list) {
 
 
@@ -82,6 +83,26 @@ public class UnemployedRepository {
             data[i][5] = unemp.getPhone();
             data[i][6] = unemp.getStud();
             data[i][7] = unemp.getProf();
+            i++;
+        }
+        return data;
+    }
+
+    public static String[][] getDistTable(ArrayList<Unemployed> list) {
+
+
+        String[][] data = new String[list.size()][9];
+        int i = 0;
+        for (Unemployed unemp : list) {
+            data[i][0] = String.valueOf(unemp.getId());
+            data[i][1] = unemp.getName();
+            data[i][2] = String.valueOf(unemp.getAge());
+            data[i][3] = unemp.getSex();
+            data[i][4] = unemp.getAddress();
+            data[i][5] = unemp.getPhone();
+            data[i][6] = unemp.getStud();
+            data[i][7] = unemp.getProf();
+            data[i][8] = unemp.getArchiveN();
             i++;
         }
         return data;
@@ -165,6 +186,10 @@ public class UnemployedRepository {
             st.setString(3, prof);
             ResultSet set = st.executeQuery();
             while (set.next()) {
+                String archive = "Нет";
+if (set.getByte(9)==1){
+    archive = "Да";
+}
                 list.add(new Unemployed(
                         set.getInt(1),
                         set.getString(2),
@@ -173,7 +198,9 @@ public class UnemployedRepository {
                         set.getString(5),
                         set.getString(6),
                         set.getString(7),
-                        set.getString(8)));
+                        set.getString(8),
+                        archive
+                ));
 
 
             }
