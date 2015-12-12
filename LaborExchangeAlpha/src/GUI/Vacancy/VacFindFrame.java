@@ -2,6 +2,10 @@ package GUI.Vacancy;
 
 import Entities.Vacancy;
 import Exceptions.FindException;
+import Exceptions.VacancyException;
+import GUI.Find.FindUnempFrame;
+import GUI.Unemployed.AllUnempFrame;
+import GUI.Unemployed.UnemplProfFrame;
 import Repository.VacancyRepo;
 import Utilities.GUIService;
 
@@ -16,7 +20,7 @@ import java.util.ArrayList;
  */
 public class VacFindFrame {
     private static JFrame frame;
-    public VacFindFrame(ArrayList<Vacancy> list){
+    public VacFindFrame(ArrayList<Vacancy> list, int uid){
 
 
 
@@ -46,23 +50,26 @@ public class VacFindFrame {
             final JTextField field = new JTextField();
             panel.add(field, GUIService.setTextFieldConstraints());
 
-            JButton  button = new JButton("Найти вакансии");
+            JButton  button = new JButton("Трудоустроить");
             ActionListener listener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String id = field.getText();
                     //Validation
-                    //   FindRepo.intValidator(id);
-                    ArrayList<Vacancy> list = VacancyRepo.getByFindId(id);
-                    if (list.size() != 0) {
+                    try {
+                        VacancyRepo.intValidator(id);
+                        VacancyRepo.employ(Integer.parseInt(id), uid);
+                        JOptionPane.showMessageDialog(panel, "Трудоустроен! Анкета клиента помещена в архив");
                         frame.dispose();
-                        new VacFindFrame(list);
+                        FindUnempFrame.getFrame().dispose();
+                        UnemplProfFrame.getFrame().dispose();
+                        AllUnempFrame.getFrame().dispose();
+                        new AllUnempFrame();
 
-
-                    } else {
-                        JOptionPane.showMessageDialog(panel, "Ничего не найдено");
+                    } catch (VacancyException e1) {
+                        JOptionPane.showMessageDialog(panel, e1.getMessage());
+                        e1.printStackTrace();
                     }
-
                 }
 
             };

@@ -18,7 +18,7 @@ public class AllUnempFrame extends JFrame {
 
     private static JFrame frame;
 
-    AllUnempFrame() {
+    public AllUnempFrame() {
         frame = new JFrame();
         frame.setBounds(30, 30, 1200, 700);
 

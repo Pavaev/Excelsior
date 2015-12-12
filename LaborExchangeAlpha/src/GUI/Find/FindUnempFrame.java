@@ -59,7 +59,7 @@ public class FindUnempFrame {
                   ArrayList<Vacancy> list = VacancyRepo.getByFindId(id);
                     if (list.size() != 0) {
                         frame.dispose();
-                     new VacFindFrame(list);
+                     new VacFindFrame(list, unemp.getId());
 
 
                     } else {

@@ -39,7 +39,7 @@ public class FindRepo {
         ArrayList<Find> list = new ArrayList<Find>();
         Connection con = DBService.connect();
         String insert = "SELECT f.id, p.name, f.u_id, u.fio FROM Find AS f, Pos AS p, Unemployed AS u" +
-                " WHERE f.u_id = ? AND f.p_id = p.id AND u.id = f.u_id";
+                " WHERE f.u_id = ? AND f.p_id = p.id AND u.id = f.u_id AND f.archive IS NULL";
         try {
             CallableStatement st = con.prepareCall(insert);
             st.setInt(1, id);

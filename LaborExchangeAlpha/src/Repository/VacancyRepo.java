@@ -5,10 +5,7 @@ import Entities.Vacancy;
 import Exceptions.VacancyException;
 import Utilities.DBService;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,5 +68,28 @@ public class VacancyRepo {
             throw new VacancyException("Поле заполнено некорректно или не заполнено. Используйте существующие числовые значения");
         }
 
+    }
+
+    public static void employ(int id, int uid) {
+        String insert = "UPDATE Find \n" +
+                "SET archive=? WHERE u_id = ?;\n" +
+                "UPDATE Unemployed\n" +
+                "SET archive = 1 WHERE id = ?;\n" +
+                "UPDATE Vacancy \n" +
+                "SET archive = 1 WHERE id = ?;";
+
+
+        PreparedStatement p;
+        try {
+            p = DBService.connect().prepareStatement(insert);
+
+            p.setInt(1, id);
+            p.setInt(2, uid);
+            p.setInt(3, uid);
+            p.setInt(4, id);
+            p.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
