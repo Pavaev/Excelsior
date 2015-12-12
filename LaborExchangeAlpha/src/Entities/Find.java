@@ -14,10 +14,11 @@ public class Find {
         this.u_id = u_id;
         this.pos = pos;
     }
-    public Find(int id, String name, String pos) {
+    public Find(int id, String pos,  int u_id, String name) {
         this.id = id;
-        this.name = name;
         this.pos = pos;
+        this.u_id = u_id;
+        this.name = name;
     }
 
     public int getId() {

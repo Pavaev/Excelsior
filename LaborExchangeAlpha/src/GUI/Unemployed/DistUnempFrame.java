@@ -17,7 +17,7 @@ public class DistUnempFrame {
     private static JFrame frame;
     private Unemployed unemp;
 
-    public DistUnempFrame(Unemployed unemp) {
+    public DistUnempFrame( Unemployed unemp) {
 
 
         frame = new JFrame();
@@ -54,8 +54,8 @@ public class DistUnempFrame {
                     UnemployedRepository.intValidator(id);
                     Unemployed unemp = UnemployedRepository.getById(Integer.parseInt(id));
                     if (unemp != null) {
-                        JFrame f = UnemplProfFrame.getFrame(unemp);
-                        f.setVisible(true);
+                        new UnemplProfFrame(unemp);
+
                         field.setText("");
                     } else {
                         JOptionPane.showMessageDialog(panel, "Ничего не найдено");

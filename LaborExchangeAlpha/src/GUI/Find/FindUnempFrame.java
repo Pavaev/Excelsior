@@ -2,7 +2,9 @@ package GUI.Find;
 
 import Entities.Find;
 import Entities.Unemployed;
+import Entities.Vacancy;
 import Exceptions.FindException;
+import GUI.Vacancy.VacFindFrame;
 import Repository.FindRepo;
 import Repository.VacancyRepo;
 import Utilities.GUIService;
@@ -28,7 +30,7 @@ public class FindUnempFrame {
         final JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.LIGHT_GRAY);
 
-        String[] labels = {"ID", "Название"};
+        String[] labels = {"ID", "Название", "ID безработного", "ФИО"};
         ArrayList<Find> list = FindRepo.getAllById(unemp.getId());
         String[][] rows = FindRepo.getTable(list);
 
@@ -54,10 +56,10 @@ public class FindUnempFrame {
                 String id = field.getText();
                 try { //Validation
                     FindRepo.intValidator(id);
-                   ArrayList<Find> list = VacancyRepo.getById(id);
+                  ArrayList<Vacancy> list = VacancyRepo.getByFindId(id);
                     if (list.size() != 0) {
                         frame.dispose();
-                        new VacFindFrame(list);
+                     new VacFindFrame(list);
 
 
                     } else {
@@ -68,9 +70,7 @@ public class FindUnempFrame {
                     ex.printStackTrace();
                 }
 
-
             }
-
 
         };
         button.addActionListener(listener);
@@ -84,5 +84,4 @@ public class FindUnempFrame {
     public static JFrame getFrame() {
         return frame;
     }
-}
 }

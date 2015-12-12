@@ -38,17 +38,18 @@ public class FindRepo {
     public static ArrayList<Find> getAllById(int id) {
         ArrayList<Find> list = new ArrayList<Find>();
         Connection con = DBService.connect();
-        String insert = "SELECT id, pos FROM Find WHERE archive = 0 AND u_id = ?";
+        String insert = "SELECT f.id, p.name, f.u_id, u.fio FROM Find AS f, Pos AS p, Unemployed AS u" +
+                " WHERE f.u_id = ? AND f.p_id = p.id AND u.id = f.u_id";
         try {
             CallableStatement st = con.prepareCall(insert);
-            st.setInt(1,id);
+            st.setInt(1, id);
             ResultSet set = st.executeQuery();
             while (set.next()) {
                 list.add(new Find(
                         set.getInt(1),
                         set.getString(2),
-                        set.getString(3)));
-
+                        set.getInt(3),
+                        set.getString(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,11 +58,13 @@ public class FindRepo {
     }
 
     public static String[][] getTable(ArrayList<Find> list) {
-        String[][] data = new String[list.size()][2];
+        String[][] data = new String[list.size()][4];
         int i = 0;
         for (Find find : list) {
             data[i][0] = String.valueOf(find.getId());
-            data[i][1] = find.getName();
+            data[i][1] = find.getPos();
+            data[i][2] = String.valueOf(find.getU_id());
+            data[i][3] = find.getName();
             i++;
         }
         return data;
@@ -70,12 +73,13 @@ public class FindRepo {
     private static void check(Find find) throws FindException {
 
 
-        if (find.getName() == null || "".equals(find.getName())) {
+        if (find.getPos() == null || "".equals(find.getPos())) {
             throw new FindException("Поле не заполнено");
         }
 
 
     }
+
     public static void intValidator(String age) throws FindException {
         final String PATTERN = "^[0-9][0-9]*$";
         Pattern pattern = Pattern.compile(PATTERN);

@@ -22,7 +22,7 @@ public class UnemplProfFrame {
 
     public UnemplProfFrame(final Unemployed unemp) {
         frame = new JFrame();
-        frame.setBounds(20, 20, 400, 400);
+        frame.setBounds(20, 20, 500, 500);
         final JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.LIGHT_GRAY);
         JLabel label = new JLabel("Профиль");
@@ -99,12 +99,15 @@ public class UnemplProfFrame {
         ActionListener l = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-new FindUnempFrame(unemp);
+                new FindUnempFrame(unemp);
             }
         };
+        b.addActionListener(l);
 
-        panel.add(button);
-        panel.add(but);
+        panel.add(but, GUIService.setTextFieldConstraints());
+        panel.add(b, GUIService.setTextFieldConstraints());
+        panel.add(button, GUIService.setTextFieldConstraints());
+
 
         frame.add(panel);
 
